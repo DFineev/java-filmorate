@@ -247,6 +247,7 @@ class FilmorateApplicationTests {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(400, response.statusCode());
     }
+
     @Test
     public void shouldReturnUserLoginContainsBlankSpaceException() throws IOException, InterruptedException {
         final User userWithBlankInLogin = User.builder()
@@ -271,6 +272,7 @@ class FilmorateApplicationTests {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(500, response.statusCode());
     }
+
     @Test
     public void shouldReturnUserBirthdayException() throws IOException, InterruptedException {
         final User userWithBirthdayInTheFuture = User.builder()
