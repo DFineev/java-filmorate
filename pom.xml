@@ -58,17 +58,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugins>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-compiler-plugin</artifactId>
-      <version>3.1</version>
-      <configuration>
-        <staleMillis>1</slateMillis>
-        <useIncrementalCompilation>true</useIncrementalCompilation>
-      </configuration>
-    </plugin>
-</plugins>
 		</plugins>
 	</build>
 
