@@ -46,6 +46,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.11</version>
                 <configuration>
                     <excludes>
                         <exclude>
@@ -53,14 +54,6 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                        <source>3.10.1</source>
-                    <target>3.10.1</target>
                 </configuration>
             </plugin>
         </plugins>
