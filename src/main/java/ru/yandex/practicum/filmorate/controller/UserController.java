@@ -1,13 +1,16 @@
 package ru.yandex.practicum.filmorate.controller;
 
 //import jakarta.validation.Valid;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -32,9 +35,9 @@ public class UserController {
     }
 
     @GetMapping
-    public Map<Integer, User> getUsers() {
+    public List<User> getUsers() {
         log.info("Получен запрос списка пользователей");
-        return users;
+        return new ArrayList<>(users.values());
     }
 
     @PutMapping

@@ -9,7 +9,9 @@ import ru.yandex.practicum.filmorate.model.Film;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -19,8 +21,8 @@ import java.util.Map;
 
 public class FilmController {
     private final Map<Integer, Film> films = new HashMap<>();
-    private static final int D = 1;
-    private int nextId = 1;
+    private final List<Film> filmsList = new ArrayList<>();
+      private int nextId = 1;
 
 
     @PostMapping
@@ -33,9 +35,9 @@ public class FilmController {
     }
 
     @GetMapping
-    public Map<Integer, Film> getFilms() {
+    public List<Film> getFilms() {
         log.info("Получен запрос списка фильмов");
-        return films;
+        return new ArrayList<>(films.values());
     }
 
     @PutMapping
