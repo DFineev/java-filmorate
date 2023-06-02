@@ -55,10 +55,14 @@
                     </excludes>
                 </configuration>
             </plugin>
-                     <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-              </plugin>
+                <configuration>
+                    <source>3.10.1</source>
+                    <target>3.10.1</target>
+                </configuration>
+            </plugin>
           </plugins>
     </build>
 
