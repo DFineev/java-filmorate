@@ -1,21 +1,23 @@
 package ru.yandex.practicum.filmorate.model;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @Builder
 public class Film {
     @EqualsAndHashCode.Exclude
     private int id;
-    @NotNull(message = "Название фильма не должно быть пустым")
+    @NotNull
     @NotBlank(message = "Название фильма не должно быть пустым")
     private String name;
     @Size(max = 200, message = "Длина описания не должна превышать 200 символов")

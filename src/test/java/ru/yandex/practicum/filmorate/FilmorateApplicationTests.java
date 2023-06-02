@@ -53,7 +53,6 @@ class FilmorateApplicationTests {
                 .uri(uri)
                 .header("Content-Type", "application/json")
                 .build();
-
         HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
         HttpResponse<String> response = client.send(request, handler);
         assertEquals(400, response.statusCode());
@@ -79,8 +78,7 @@ class FilmorateApplicationTests {
                 .header("Content-Type", "application/json")
                 .build();
 
-        HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
-        HttpResponse<String> response = client.send(request, handler);
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(400, response.statusCode());
     }
 
