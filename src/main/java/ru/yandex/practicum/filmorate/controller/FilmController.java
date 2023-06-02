@@ -17,7 +17,7 @@ import java.util.Map;
 @Slf4j
 public class FilmController {
     private final Map<Integer, Film> films = new HashMap<>();
-
+    private static final int D = 1;
     private int nextId = 1;
 
 
