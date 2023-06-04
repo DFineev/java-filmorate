@@ -37,12 +37,16 @@ public class FilmController {
     @PutMapping
     public Film update(@Valid @RequestBody Film film) {
         log.info("Получен запрос на обновление фильма");
-     try {
-        filmsList.set((film.getId()-1), film);
-        } catch (ValidException e) {
-         e.getMessage();
-     }
-
+        boolean isValid = false;
+        for (Film film1 : filmsList) {
+            if (film1.getId()==film.getId()) {
+              isValid = true;
+                filmsList.set(filmsList.indexOf(film1), film );
+            }
+        }
+         if (!isValid) {
+             throw new ValidException("Фильм с указанным id не найден");
+         }
 return film;
 
     }
