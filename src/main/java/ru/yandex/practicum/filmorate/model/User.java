@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class User {
-    @EqualsAndHashCode.Exclude
     private int id;
     @NotNull
     @NotBlank
