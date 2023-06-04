@@ -20,9 +20,9 @@ import java.util.Map;
 @Slf4j
 
 public class FilmController {
+
     private final List<Film> filmsList = new ArrayList<>();
     private int nextId = 1;
-
 
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
@@ -37,7 +37,7 @@ public class FilmController {
     public List<Film> getFilms() {
         log.info("Получен запрос списка фильмов");
         return filmsList;
-    }
+
 
     @PutMapping
     public Film update(@Valid @RequestBody Film film) {
