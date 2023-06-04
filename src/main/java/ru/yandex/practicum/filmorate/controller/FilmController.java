@@ -38,14 +38,13 @@ public class FilmController {
     @PutMapping
     public Film update(@Valid @RequestBody Film film) {
         log.info("Получен запрос на обновление фильма");
-
         boolean idValidator = false;
         for (Film film1 : filmsList) {
             if (film1.getId() == film.getId()) {
                 idValidator = true;
                 break;
             }
-                        }
+        }
         if (!idValidator) {
             throw new ValidException("Фильм с указанным айди не найден");
         } else {
