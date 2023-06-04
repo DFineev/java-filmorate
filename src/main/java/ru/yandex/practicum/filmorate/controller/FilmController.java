@@ -23,7 +23,6 @@ public class FilmController {
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
         log.info("Получен запрос на добавление фильма");
-        //validator(film);
         film.setId(nextId++);
         filmsList.add(film);
         return film;
@@ -48,7 +47,7 @@ public class FilmController {
         if (!idValidator) {
             throw new ValidException("Фильм с указанным айди не найден");
         } else {
-            filmsList.set(film.getId()-1, film);
+            filmsList.set((film.getId()-1), film);
         }
 return film;
 
