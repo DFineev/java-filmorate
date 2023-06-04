@@ -20,44 +20,43 @@ import java.util.Map;
 @Slf4j
 
 public class FilmController {
-    private final Map<Integer, Film> films = new HashMap<>();
     private final List<Film> filmsList = new ArrayList<>();
-      private int nextId = 1;
+    private int nextId = 1;
 
 
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
         log.info("Получен запрос на добавление фильма");
-        validator(film);
+        //validator(film);
         film.setId(nextId++);
-        films.put(film.getId(), film);
+        filmsList.add(film);
         return film;
     }
 
     @GetMapping
     public List<Film> getFilms() {
         log.info("Получен запрос списка фильмов");
-        return new ArrayList<>(films.values());
+        return filmsList;
     }
 
     @PutMapping
     public Film update(@Valid @RequestBody Film film) {
-        log.info("Получен запрос на обновление фильма");
-        validator(film);
-        if (!films.containsKey(film.getId())) {
-            throw new ValidException("Фильм не найден");
+        log.info("Получен запрос на обновление фильма"); //todo: разобраться с этим методо
+
+        boolean idValidator = false;
+        for (Film film1 : filmsList) {
+            if (film1.getId() == film.getId()) {
+                idValidator = true;
+            }
+                        }
+        if (!idValidator) {
+            throw new ValidException("Фильм с указанным айди не найден");
+        } else {
+            filmsList.set(film.getId()-1, film);
         }
-        films.put(film.getId(), film);
-        return film;
+return film;
+
     }
 
-    public void validator(Film film) {
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
-            log.info("Валидация не пройдена");
-            throw new ValidException("Выбрана слишком старая дата релиза");
-        }
-    }
+
 }
-
-
-
