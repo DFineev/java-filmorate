@@ -48,8 +48,5 @@ public class FilmController {
             throw new ValidException("Фильм с указанным id не найден");
         }
         return film;
-
     }
-
-
 }
