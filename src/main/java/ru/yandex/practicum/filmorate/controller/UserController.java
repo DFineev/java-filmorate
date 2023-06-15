@@ -30,7 +30,6 @@ public class UserController {
         validator(user);
         user.setId(nextId++);
         users.put(user.getId(), user);
-        System.out.println(user);
         return user;
     }
 
