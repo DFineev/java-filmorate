@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ import java.util.Map;
 public class UserController {
 
         private final Map<Integer, User> users = new HashMap<>();
-        public int nextId = 1;
+
+        InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
 
 
 
@@ -28,9 +30,9 @@ public class UserController {
     public User createUser(@Valid @RequestBody User user) {
         log.info("Получен запрос на создание пользователя");
         validator(user);
-        user.setId(nextId++);
-        users.put(user.getId(), user);
-        return user;
+      //  user.setId(nextId++);
+       // users.put(user.getId(), user);
+        return inMemoryUserStorage.createUser(user);
     }
 
     @GetMapping
@@ -43,11 +45,16 @@ public class UserController {
     public User update(@Valid @RequestBody User user) {
         log.info("Получен запрос на изменение пользователя");
         validator(user);
-        if (!users.containsKey(user.getId())) {
+        /*if (!users.containsKey(user.getId())) {
             throw new ValidException("Пользователь не найден");
         }
-        users.put(user.getId(), user);
-        return user;
+        users.put(user.getId(), user);*/
+        return inMemoryUserStorage.updateUser(user);
+    }
+    @DeleteMapping ("/{userId}")
+    public void delete(@PathVariable("userId") int id){
+        log.info("Получен запрос на удаление пользователя");
+        inMemoryUserStorage.deleteUser(id);
     }
 
     public void validator(User user) {
