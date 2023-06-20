@@ -6,13 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
 import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @RestController
@@ -20,41 +18,54 @@ import java.util.Map;
 @Slf4j
 public class UserController {
 
-        private final Map<Integer, User> users = new HashMap<>();
+    private final Map<Integer, User> users = new HashMap<>();
 
-        InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
-
+    InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
+    UserService userService = new UserService(inMemoryUserStorage);
 
 
     @PostMapping
     public User createUser(@Valid @RequestBody User user) {
         log.info("Получен запрос на создание пользователя");
         validator(user);
-      //  user.setId(nextId++);
-       // users.put(user.getId(), user);
         return inMemoryUserStorage.createUser(user);
     }
 
     @GetMapping
     public List<User> getUsers() {
         log.info("Получен запрос списка пользователей");
-        return new ArrayList<>(users.values());
+        return inMemoryUserStorage.getUsers();
     }
 
     @PutMapping
     public User update(@Valid @RequestBody User user) {
         log.info("Получен запрос на изменение пользователя");
         validator(user);
-        /*if (!users.containsKey(user.getId())) {
-            throw new ValidException("Пользователь не найден");
-        }
-        users.put(user.getId(), user);*/
         return inMemoryUserStorage.updateUser(user);
     }
-    @DeleteMapping ("/{userId}")
-    public void delete(@PathVariable("userId") int id){
+
+    @DeleteMapping("/{userId}")
+    public void delete(@PathVariable("userId") int id) {
         log.info("Получен запрос на удаление пользователя");
         inMemoryUserStorage.deleteUser(id);
+    }
+
+  @PutMapping("/{id}/friends/{friendId}")
+    public void addFriend(@PathVariable Integer id, @PathVariable Integer friendId) {
+        log.info("Получен запрос на добавление в друзья");
+        userService.makeFriends(id, friendId);
+    }
+
+    @DeleteMapping("/{id}/friends/{friendId}")
+    public void deleteFriend(@PathVariable Integer id, @PathVariable Integer friendId) {
+        log.info("Получен запрос на удаление из друзей");
+        userService.deleteFromFriends(id, friendId);
+    }
+
+    @GetMapping("/{id}/friends")
+    public Set<Integer> getFriendsList(@PathVariable int id) {
+        log.info("Получен запрос на вывод списка друзей");
+        return userService.getFriendsList(id);
     }
 
     public void validator(User user) {

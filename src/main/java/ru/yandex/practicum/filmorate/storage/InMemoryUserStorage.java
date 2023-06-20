@@ -5,7 +5,9 @@ import ru.yandex.practicum.filmorate.exception.ValidException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -38,7 +40,17 @@ public class InMemoryUserStorage implements UserStorage {
         } else {
             throw new ValidException("Пользователь с указанным id не найден");
         }
-
     }
-}//todo: дописать вывод списка пользователей
+
+    public List<User> getUsers() {
+        List<User> userList = new ArrayList<>(users.values());
+                return userList;
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return users.get(id);
+    }
+
+}
 

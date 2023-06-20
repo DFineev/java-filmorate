@@ -10,4 +10,6 @@ public interface FilmStorage {
 
     public void removeFilm (int id);
 
+    public Film getFilmById(int id);
+
 }

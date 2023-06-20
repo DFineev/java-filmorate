@@ -9,4 +9,6 @@ public interface UserStorage {
     public User updateUser (User user);
 
     public void deleteUser (int id);
+
+    public User getUserById(int id);
 }
