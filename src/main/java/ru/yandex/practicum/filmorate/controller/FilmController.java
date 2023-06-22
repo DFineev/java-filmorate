@@ -34,6 +34,11 @@ public class FilmController {
         log.info("Получен запрос списка фильмов");
        return inMemoryFilmStorage.getFilms();
     }
+    @GetMapping ("/{filmId}")
+    public Film getFilmById (@PathVariable("filmId") int id) {
+        log.info("Получен запрос на поиск фильма");
+        return inMemoryFilmStorage.getFilmById(id);
+    }
 
     @PutMapping
     public Film update(@Valid @RequestBody Film film) {

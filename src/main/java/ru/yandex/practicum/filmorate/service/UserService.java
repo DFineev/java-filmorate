@@ -43,8 +43,26 @@ public void deleteFromFriends(int id, int friendId){
     friends2.remove(user1.getId());
     user2.setFriends(friends2);
 }
-public Set<Integer> getFriendsList(int id){
+public Set<User> getFriendsList(int id){
     User user = userStorage.getUserById(id);
-    return user.getFriends();
+    Set<Integer> friendIds = user.getFriends();
+    Set<User> friendsList = new HashSet<>();
+    for (Integer friendId : friendIds) {
+        friendsList.add(userStorage.getUserById(friendId));
+    }
+    return friendsList;
+}
+public Set<User> getCommonFriendsList(int id, int otherId){
+    Set<User> commonFriendsList = new HashSet<>();
+    Set<User> friends1List = getFriendsList(id);
+    Set<User> friends2List = getFriendsList(otherId);
+    for (User user : friends1List) {
+        for (User user1 : friends2List) {
+            if (user.getId()==user1.getId()) {
+                commonFriendsList.add(user);
+            }
+        }
+    }
+    return commonFriendsList;
 }
 }

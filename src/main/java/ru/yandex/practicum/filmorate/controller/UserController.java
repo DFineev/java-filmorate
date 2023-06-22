@@ -36,6 +36,13 @@ public class UserController {
         return inMemoryUserStorage.getUsers();
     }
 
+    @GetMapping("/{userId}")
+    public User getUserById(@PathVariable int userId) {
+        log.info("Получен запрос на поиск пользователя по id");
+
+        return inMemoryUserStorage.getUserById(userId);
+    }
+
     @PutMapping
     public User update(@Valid @RequestBody User user) {
         log.info("Получен запрос на изменение пользователя");
@@ -49,8 +56,8 @@ public class UserController {
         inMemoryUserStorage.deleteUser(id);
     }
 
-  @PutMapping("/{id}/friends/{friendId}")
-    public void addFriend(@PathVariable Integer id, @PathVariable Integer friendId) {
+    @PutMapping("/{id}/friends/{friendId}")
+    public void addFriend(@Valid @PathVariable Integer id,@Valid @PathVariable Integer friendId) {
         log.info("Получен запрос на добавление в друзья");
         userService.makeFriends(id, friendId);
     }
@@ -62,9 +69,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}/friends")
-    public Set<Integer> getFriendsList(@PathVariable int id) {
+    public Set<User> getFriendsList(@PathVariable int id) {
         log.info("Получен запрос на вывод списка друзей");
         return userService.getFriendsList(id);
+    }
+    @GetMapping("/{id}/friends/common/{otherId}")
+    public Set<User> getCommonFriendsList(@PathVariable int id, @PathVariable int otherId){
+        log.info("Получен запрос списка общих друзей");
+        return userService.getCommonFriendsList(id, otherId);
     }
 
     public void validator(User user) {
