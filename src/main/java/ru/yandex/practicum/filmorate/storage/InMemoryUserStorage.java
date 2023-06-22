@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.storage;
 
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.ValidException;
-import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.ArrayList;
@@ -43,8 +42,7 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     public List<User> getUsers() {
-        List<User> userList = new ArrayList<>(users.values());
-                return userList;
+        return new ArrayList<>(users.values());
     }
 
     @Override

@@ -2,14 +2,17 @@ package ru.yandex.practicum.filmorate.storage;
 
 import ru.yandex.practicum.filmorate.model.Film;
 
+import java.util.HashSet;
+
 public interface FilmStorage {
 
-    public Film addFilm(Film film);
+    Film addFilm(Film film);
 
-    public Film updateFilm (Film film);
+    Film updateFilm (Film film);
 
-    public void removeFilm (int id);
+    void removeFilm (int id);
+    HashSet<Film> getFilms();
 
-    public Film getFilmById(int id);
+    Film getFilmById(int id);
 
 }

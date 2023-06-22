@@ -18,7 +18,6 @@ import java.util.*;
 @Slf4j
 public class UserController {
 
-    private final Map<Integer, User> users = new HashMap<>();
 
     InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
     UserService userService = new UserService(inMemoryUserStorage);
