@@ -8,9 +8,10 @@ public interface FilmStorage {
 
     Film addFilm(Film film);
 
-    Film updateFilm (Film film);
+    Film updateFilm(Film film);
 
-    void removeFilm (int id);
+    void removeFilm(int id);
+
     HashSet<Film> getFilms();
 
     Film getFilmById(int id);
