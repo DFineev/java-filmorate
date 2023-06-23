@@ -11,7 +11,7 @@ import java.util.*;
 
 @Data
 @Builder
-
+@AllArgsConstructor
 public class User {
     private int id;
     @NotNull

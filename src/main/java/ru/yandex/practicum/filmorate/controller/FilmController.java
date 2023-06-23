@@ -32,10 +32,11 @@ public class FilmController {
     @GetMapping
     public HashSet<Film> getFilms() {
         log.info("Получен запрос списка фильмов");
-       return inMemoryFilmStorage.getFilms();
+        return inMemoryFilmStorage.getFilms();
     }
-    @GetMapping ("/{filmId}")
-    public Film getFilmById (@PathVariable("filmId") int id) {
+
+    @GetMapping("/{filmId}")
+    public Film getFilmById(@PathVariable("filmId") int id) {
         log.info("Получен запрос на поиск фильма");
         return inMemoryFilmStorage.getFilmById(id);
     }
@@ -45,26 +46,28 @@ public class FilmController {
         log.info("Получен запрос на обновление фильма");
         return inMemoryFilmStorage.updateFilm(film);
     }
-    @DeleteMapping ("/{filmId}")
-    public void remove(@PathVariable("filmId") int id){
+
+    @DeleteMapping("/{filmId}")
+    public void remove(@PathVariable("filmId") int id) {
         log.info("Получен запрос на удаление фильма");
         inMemoryFilmStorage.removeFilm(id);
     }
 
     @PutMapping("/{id}/like/{userId}")
-    public void makeLike(@PathVariable("id") int id, @PathVariable("userId") int userId){
+    public void makeLike(@PathVariable("id") int id, @PathVariable("userId") int userId) {
         log.info("Получен запрос на добавление лайка");
-        filmService.makeLike(id,userId);
-    }
-    @DeleteMapping("/{id}/like/{userId}")
-    public void removeLike(@PathVariable("id") int id, @PathVariable("userId") int userId){
-        log.info("Получен запрос на добавление лайка");
-        filmService.removeLike(id,userId);
+        filmService.makeLike(id, userId);
     }
 
-@GetMapping("/popular")
-    public List<Film> getPopularFilms(@RequestParam (defaultValue = "10") int count){
+    @DeleteMapping("/{id}/like/{userId}")
+    public void removeLike(@PathVariable("id") int id, @PathVariable("userId") int userId) {
+        log.info("Получен запрос на удаление лайка");
+        filmService.removeLike(id, userId);
+    }
+
+    @GetMapping("/popular")
+    public List<Film> getPopularFilms(@RequestParam(defaultValue = "10") int count) {
         log.info("Получен запрос списка самых популярных фильмов");
         return filmService.getFilmsChart(count);
-}
+    }
 }
