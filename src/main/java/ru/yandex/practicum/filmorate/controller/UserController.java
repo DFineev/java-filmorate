@@ -10,7 +10,7 @@ import ru.yandex.practicum.filmorate.service.UserService;
 import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.List;
 
 
 @RestController
@@ -39,7 +39,6 @@ public class UserController {
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable int userId) {
         log.info("Получен запрос на поиск пользователя по id");
-
         return inMemoryUserStorage.getUserById(userId);
     }
 
@@ -57,24 +56,26 @@ public class UserController {
     }
 
     @PutMapping("/{id}/friends/{friendId}")
-    public void addFriend(@Valid @PathVariable Integer id,@Valid @PathVariable Integer friendId) {
+    public void addFriend(@PathVariable Integer id,@PathVariable Integer friendId) {
         log.info("Получен запрос на добавление в друзья");
         userService.makeFriends(id, friendId);
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
-    public void deleteFriend(@PathVariable Integer id, @PathVariable Integer friendId) {
+    public void deleteFriend(@PathVariable Integer id,@PathVariable int friendId) {
+
+
         log.info("Получен запрос на удаление из друзей");
         userService.deleteFromFriends(id, friendId);
     }
 
     @GetMapping("/{id}/friends")
-    public Set<User> getFriendsList(@PathVariable int id) {
+    public List<User> getFriendsList(@PathVariable int id) {
         log.info("Получен запрос на вывод списка друзей");
         return userService.getFriendsList(id);
     }
     @GetMapping("/{id}/friends/common/{otherId}")
-    public Set<User> getCommonFriendsList(@PathVariable int id, @PathVariable int otherId){
+    public List<User> getCommonFriendsList(@PathVariable Integer id, @PathVariable Integer otherId){
         log.info("Получен запрос списка общих друзей");
         return userService.getCommonFriendsList(id, otherId);
     }

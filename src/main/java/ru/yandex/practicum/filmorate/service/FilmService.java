@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.exception.IncorrectParameterException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
@@ -24,9 +25,12 @@ public class FilmService {
         film.setLikes(likes);
     }
 
-    public void removeLike(int id, int userId) {
+    public void removeLike(Integer id, Integer userId) {
         Film film = filmStorage.getFilmById(id);
         HashSet<Integer> likes = film.getLikes();
+        if (likes==null ||  !likes.contains(userId) ) {
+            throw new IncorrectParameterException("userId");
+        }
         likes.remove(userId);
         film.setLikes(likes);
     }
