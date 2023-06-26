@@ -2,12 +2,14 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.HashSet;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
 @RequestMapping("/films")
 @RequiredArgsConstructor
 @Slf4j
-
+@Validated
 public class FilmController {
 
     InMemoryFilmStorage inMemoryFilmStorage = new InMemoryFilmStorage();
@@ -36,7 +38,7 @@ public class FilmController {
     }
 
     @GetMapping("/{filmId}")
-    public Film getFilmById(@PathVariable("filmId") int id) {
+    public Film getFilmById(@PathVariable("filmId") @Min(1) int id) {
         log.info("Получен запрос на поиск фильма");
         return inMemoryFilmStorage.getFilmById(id);
     }
@@ -48,19 +50,19 @@ public class FilmController {
     }
 
     @DeleteMapping("/{filmId}")
-    public void remove(@PathVariable("filmId") int id) {
+    public void remove(@PathVariable("filmId") @Min(1) int id) {
         log.info("Получен запрос на удаление фильма");
         inMemoryFilmStorage.removeFilm(id);
     }
 
     @PutMapping("/{id}/like/{userId}")
-    public void makeLike(@PathVariable("id") int id, @PathVariable("userId") int userId) {
+    public void makeLike(@PathVariable("id") @Min(1) int id, @PathVariable("userId") @Min(1) int userId) {
         log.info("Получен запрос на добавление лайка");
         filmService.makeLike(id, userId);
     }
 
     @DeleteMapping("/{id}/like/{userId}")
-    public void removeLike(@PathVariable("id") int id, @PathVariable("userId") int userId) {
+    public void removeLike(@PathVariable("id") @Min(1) int id, @PathVariable("userId") @Min(1) int userId) {
         log.info("Получен запрос на удаление лайка");
         filmService.removeLike(id, userId);
     }

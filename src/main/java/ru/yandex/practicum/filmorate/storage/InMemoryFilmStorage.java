@@ -1,10 +1,13 @@
 package ru.yandex.practicum.filmorate.storage;
 
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 import ru.yandex.practicum.filmorate.exception.IncorrectParameterException;
 import ru.yandex.practicum.filmorate.exception.ValidException;
 import ru.yandex.practicum.filmorate.model.Film;
 
+import javax.validation.constraints.Positive;
 import java.util.*;
 
 @Component
@@ -24,7 +27,11 @@ public class InMemoryFilmStorage implements FilmStorage {
         if (films.containsKey(film.getId())) {
             films.put(film.getId(), film);
         } else {
-            throw new ValidException("Фильм с указанным id не найден");
+            if (film.getId() < 1) {
+                throw new ValidException("ID меньше 1");
+            } else {
+                throw new ValidException("Фильм с указанным id не найден");
+            }
         }
         return film;
     }
