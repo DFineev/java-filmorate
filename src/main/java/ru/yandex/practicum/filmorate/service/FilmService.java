@@ -17,7 +17,7 @@ public class FilmService {
 
     public void makeLike(int id, int userId) {
         Film film = filmStorage.getFilmById(id);
-        HashSet<Integer> likes = film.getLikes();
+        Set<Integer> likes = film.getLikes();
         if (likes == null) {
             likes = new HashSet<>();
         }
@@ -27,7 +27,7 @@ public class FilmService {
 
     public void removeLike(Integer id, Integer userId) {
         Film film = filmStorage.getFilmById(id);
-        HashSet<Integer> likes = film.getLikes();
+        Set<Integer> likes = film.getLikes();
         if (likes == null || !likes.contains(userId)) {
             throw new IncorrectParameterException("userId");
         }
