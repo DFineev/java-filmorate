@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/friends/{friendId}")
-    public void addFriend(@PathVariable @Min(1) int id, @PathVariable @Min(1) int friendId) {
+    public void addFriend(@PathVariable int id, @PathVariable int friendId) {
         log.info("Получен запрос на добавление в друзья");
         userService.makeFriends(id, friendId);
     }

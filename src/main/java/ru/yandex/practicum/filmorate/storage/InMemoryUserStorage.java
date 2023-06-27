@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.storage;
 
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.IncorrectParameterException;
+import ru.yandex.practicum.filmorate.exception.ObjectNotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidException;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -27,7 +28,7 @@ public class InMemoryUserStorage implements UserStorage {
     @Override
     public User updateUser(User user) {
         if (!users.containsKey(user.getId())) {
-            throw new ValidException("Пользователь не найден");
+            throw new ObjectNotFoundException("id = " + user.getId());
         }
         users.put(user.getId(), user);
         return user;
@@ -38,7 +39,7 @@ public class InMemoryUserStorage implements UserStorage {
         if (users.containsKey(id)) {
             users.remove(id);
         } else {
-            throw new ValidException("Пользователь с указанным id не найден");
+            throw new ObjectNotFoundException("id = " + id);
         }
     }
 
@@ -49,7 +50,7 @@ public class InMemoryUserStorage implements UserStorage {
     @Override
     public User getUserById(int id) {
         if (!users.containsKey(id)) {
-            throw new IncorrectParameterException("id");
+            throw new ObjectNotFoundException("id = " + id);
         }
         return users.get(id);
     }
