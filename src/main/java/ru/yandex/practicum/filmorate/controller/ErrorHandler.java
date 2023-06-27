@@ -39,6 +39,7 @@ public class ErrorHandler {
         return new ErrorResponse(String.format("Введен некорректный параметр \"%s\".", e.getConstraintViolations())
         );
     }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleObjectNotFoundException(final ObjectNotFoundException e) {
