@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/users" )
+@RequestMapping("/users")
 @Slf4j
 @Validated
 public class UserController {
@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public void delete(@PathVariable("userId" ) @Min(1) int id) {
+    public void delete(@PathVariable("userId") @Min(1) int id) {
         log.info("Получен запрос на удаление пользователя");
         inMemoryUserStorage.deleteUser(id);
     }
@@ -86,7 +86,7 @@ public class UserController {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
-        if (user.getLogin().contains(" " )) {
+        if (user.getLogin().contains(" ")) {
             log.info("Валидация не пройдена");
             throw new ValidException("Логин не может содержать пробелы");
         }
