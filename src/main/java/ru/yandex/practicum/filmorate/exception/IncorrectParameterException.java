@@ -1,9 +1,9 @@
 package ru.yandex.practicum.filmorate.exception;
 
-public class ValidException extends RuntimeException {
+public class IncorrectParameterException extends RuntimeException {
     private final String parameter;
 
-    public ValidException(String parameter) {
+    public IncorrectParameterException(String parameter) {
         this.parameter = parameter;
     }
 
@@ -11,3 +11,4 @@ public class ValidException extends RuntimeException {
         return parameter;
     }
 }
+
