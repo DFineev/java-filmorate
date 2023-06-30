@@ -1,7 +1,8 @@
 package ru.yandex.practicum.filmorate.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.IncorrectParameterException;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -9,11 +10,36 @@ import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
 import java.util.*;
 
+@Component
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class FilmService {
     private final FilmStorage filmStorage;
+    @Autowired
+    public FilmService(FilmStorage filmStorage) {
+        this.filmStorage = filmStorage;
+    }
+
+    public Film addFilm (Film film) {
+        return filmStorage.addFilm(film);
+    }
+
+    public HashSet<Film> getFilms(){
+        return filmStorage.getFilms();
+    }
+
+    public Film getFilmById(int id) {
+        return filmStorage.getFilmById(id);
+    }
+
+    public void removeFilm(int id){
+        filmStorage.removeFilm(id);
+    }
+
+    public Film updateFilm(Film film){
+        return filmStorage.updateFilm(film);
+    }
+
 
     public void makeLike(int id, int userId) {
         Film film = filmStorage.getFilmById(id);
