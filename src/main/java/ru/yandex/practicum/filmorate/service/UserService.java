@@ -1,20 +1,45 @@
 package ru.yandex.practicum.filmorate.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.*;
 
+@Component
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class UserService {
 
     private final UserStorage userStorage;
 
+    @Autowired
+    public UserService(UserStorage userStorage) {
+        this.userStorage = userStorage;
+    }
+
+    public User createUser(User user){
+        return userStorage.createUser(user);
+    }
+
+    public List<User> getUsers(){
+        return userStorage.getUsers();
+    }
+
+    public User getUserById(int id){
+        return userStorage.getUserById(id);
+    }
+
+    public User updateUser(User user){
+        return userStorage.updateUser(user);
+    }
+
+    public void deleteUser(int id){
+        userStorage.deleteUser(id);
+    }
     public void makeFriends(int id, int friendId) {
         User user1 = userStorage.getUserById(id);
         User user2 = userStorage.getUserById(friendId);

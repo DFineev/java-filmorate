@@ -3,59 +3,59 @@ package ru.yandex.practicum.filmorate.controller;
 //import jakarta.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
-import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
-
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
 
-
+@Component
 @RestController
 @RequestMapping("/users")
 @Slf4j
 @Validated
 public class UserController {
 
+    private final UserService userService;
 
-    InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
-    UserService userService = new UserService(inMemoryUserStorage);
-
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping
     public User createUser(@Valid @RequestBody User user) {
         log.info("Получен запрос на создание пользователя");
         validator(user);
-        return inMemoryUserStorage.createUser(user);
+        return userService.createUser(user);
     }
 
     @GetMapping
     public List<User> getUsers() {
         log.info("Получен запрос списка пользователей");
-        return inMemoryUserStorage.getUsers();
+        return userService.getUsers();
     }
 
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable @Min(1) int userId) {
         log.info("Получен запрос на поиск пользователя по id");
-        return inMemoryUserStorage.getUserById(userId);
+        return userService.getUserById(userId);
     }
 
     @PutMapping
     public User update(@Valid @RequestBody User user) {
         log.info("Получен запрос на изменение пользователя");
         validator(user);
-        return inMemoryUserStorage.updateUser(user);
+        return userService.updateUser(user);
     }
 
     @DeleteMapping("/{userId}")
     public void delete(@PathVariable("userId") @Min(1) int id) {
         log.info("Получен запрос на удаление пользователя");
-        inMemoryUserStorage.deleteUser(id);
+        userService.deleteUser(id);
     }
 
     @PutMapping("/{id}/friends/{friendId}")
