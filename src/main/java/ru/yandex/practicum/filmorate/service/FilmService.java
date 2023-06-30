@@ -15,16 +15,17 @@ import java.util.*;
 @Slf4j
 public class FilmService {
     private final FilmStorage filmStorage;
+
     @Autowired
     public FilmService(FilmStorage filmStorage) {
         this.filmStorage = filmStorage;
     }
 
-    public Film addFilm (Film film) {
+    public Film addFilm(Film film) {
         return filmStorage.addFilm(film);
     }
 
-    public HashSet<Film> getFilms(){
+    public HashSet<Film> getFilms() {
         return filmStorage.getFilms();
     }
 
@@ -32,11 +33,11 @@ public class FilmService {
         return filmStorage.getFilmById(id);
     }
 
-    public void removeFilm(int id){
+    public void removeFilm(int id) {
         filmStorage.removeFilm(id);
     }
 
-    public Film updateFilm(Film film){
+    public Film updateFilm(Film film) {
         return filmStorage.updateFilm(film);
     }
 
