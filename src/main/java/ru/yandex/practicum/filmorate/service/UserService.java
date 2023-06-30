@@ -21,25 +21,26 @@ public class UserService {
         this.userStorage = userStorage;
     }
 
-    public User createUser(User user){
+    public User createUser(User user) {
         return userStorage.createUser(user);
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return userStorage.getUsers();
     }
 
-    public User getUserById(int id){
+    public User getUserById(int id) {
         return userStorage.getUserById(id);
     }
 
-    public User updateUser(User user){
+    public User updateUser(User user) {
         return userStorage.updateUser(user);
     }
 
-    public void deleteUser(int id){
+    public void deleteUser(int id) {
         userStorage.deleteUser(id);
     }
+
     public void makeFriends(int id, int friendId) {
         User user1 = userStorage.getUserById(id);
         User user2 = userStorage.getUserById(friendId);
