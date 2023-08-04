@@ -6,6 +6,7 @@ import ru.yandex.practicum.filmorate.util.FilmReleaseDate;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,5 +24,6 @@ public class Film {
     private LocalDate releaseDate;
     @Positive
     private long duration;
+    private Set<Integer> likes;
 
 }

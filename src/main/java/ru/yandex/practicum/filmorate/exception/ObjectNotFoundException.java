@@ -1,9 +1,9 @@
 package ru.yandex.practicum.filmorate.exception;
 
-public class ValidException extends RuntimeException {
+public class ObjectNotFoundException extends RuntimeException {
     private final String parameter;
 
-    public ValidException(String parameter) {
+    public ObjectNotFoundException(String parameter) {
         this.parameter = parameter;
     }
 
