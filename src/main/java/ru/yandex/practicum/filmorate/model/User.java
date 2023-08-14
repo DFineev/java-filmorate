@@ -27,4 +27,4 @@ public class User {
     private final LocalDate birthday;
 
     private Set<Integer> friends;
-}
+    }
