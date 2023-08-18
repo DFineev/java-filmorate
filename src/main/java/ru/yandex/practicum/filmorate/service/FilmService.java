@@ -25,7 +25,7 @@ public class FilmService {
         return filmStorage.addFilm(film);
     }
 
-    public HashSet<Film> getFilms() {
+    public List<Film> getFilms() {
         return filmStorage.getFilms();
     }
 

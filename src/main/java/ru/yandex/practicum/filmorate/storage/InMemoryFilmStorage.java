@@ -5,9 +5,7 @@ import ru.yandex.practicum.filmorate.exception.IncorrectParameterException;
 import ru.yandex.practicum.filmorate.exception.ObjectNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
@@ -41,8 +39,8 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public HashSet<Film> getFilms() {
-        return new HashSet<>(films.values());
+    public List getFilms() {
+        return new ArrayList(films.values());
     }
 
     @Override
@@ -51,5 +49,15 @@ public class InMemoryFilmStorage implements FilmStorage {
             throw new IncorrectParameterException("id");
         }
         return films.get(id);
+    }
+
+    @Override
+    public Film setLike(Integer filmId, Integer userId) {
+        return null;
+    }
+
+    @Override
+    public Film deleteLike(Integer filmId, Integer userId) {
+        return null;
     }
 }

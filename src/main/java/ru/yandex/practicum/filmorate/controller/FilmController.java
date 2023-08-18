@@ -33,7 +33,7 @@ public class FilmController {
     }
 
     @GetMapping
-    public HashSet<Film> getFilms() {
+    public List<Film> getFilms() {
         log.info("Получен запрос списка фильмов");
         return filmService.getFilms();
     }

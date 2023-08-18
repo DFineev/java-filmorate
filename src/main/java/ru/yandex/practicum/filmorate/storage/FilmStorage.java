@@ -2,7 +2,7 @@ package ru.yandex.practicum.filmorate.storage;
 
 import ru.yandex.practicum.filmorate.model.Film;
 
-import java.util.HashSet;
+import java.util.List;
 
 public interface FilmStorage {
 
@@ -12,8 +12,10 @@ public interface FilmStorage {
 
     void removeFilm(int id);
 
-    HashSet<Film> getFilms();
+    List<Film> getFilms();
 
     Film getFilmById(int id);
+    Film setLike(Integer filmId, Integer userId);
+    Film deleteLike(Integer filmId, Integer userId);
 
 }
