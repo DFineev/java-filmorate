@@ -8,14 +8,10 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Set;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Data
 @Builder
 public class Film {
     private int id;
-    @NotNull
     @NotBlank(message = "Название фильма не должно быть пустым")
     private String name;
     @Size(max = 200, message = "Длина описания не должна превышать 200 символов")
@@ -23,11 +19,10 @@ public class Film {
    @FilmReleaseDate
     private LocalDate releaseDate;
     @Positive
-    private long duration;
+    private int duration;
     private Set<Integer> likes;
     @NotNull
     private Mpa mpa;
     private Set<Genre> genres;
-
 
 }

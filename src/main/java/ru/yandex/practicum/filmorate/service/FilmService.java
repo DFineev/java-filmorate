@@ -43,23 +43,25 @@ public class FilmService {
 
 
     public void makeLike(int id, int userId) {
-        Film film = filmStorage.getFilmById(id);
+       /* Film film = filmStorage.getFilmById(id);
         Set<Integer> likes = film.getLikes();
         if (likes == null) {
             likes = new HashSet<>();
         }
         likes.add(userId);
-        film.setLikes(likes);
+        film.setLikes(likes);*/
+        filmStorage.setLike(id,userId);
     }
 
     public void removeLike(Integer id, Integer userId) {
-        Film film = filmStorage.getFilmById(id);
+    /*    Film film = filmStorage.getFilmById(id);
         Set<Integer> likes = film.getLikes();
         if (likes == null || !likes.contains(userId)) {
             throw new IncorrectParameterException("userId");
         }
         likes.remove(userId);
-        film.setLikes(likes);
+        film.setLikes(likes);*/
+        filmStorage.deleteLike(id, userId);
     }
 
     public List<Film> getFilmsChart(Integer size) {

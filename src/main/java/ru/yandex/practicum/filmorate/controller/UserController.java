@@ -71,7 +71,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/friends")
-    public List<User> getFriendsList(@PathVariable @Min(1) int id) {
+    public List<User> getFriendsList(@PathVariable int id) {
         log.info("Получен запрос на вывод списка друзей");
         return userService.getFriendsList(id);
     }

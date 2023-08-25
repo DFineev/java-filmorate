@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.storage.DAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -11,9 +12,7 @@ import ru.yandex.practicum.filmorate.storage.MpaStorage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -29,6 +28,7 @@ public class MpaDbStorage implements MpaStorage {
 
         return jdbcTemplate.queryForObject(sqlQuery, this::mapRowToMpa, mpaId);
     }
+
 
     public List<Mpa> findAll() {
         List<Mpa> mpaList = new ArrayList<>();
@@ -46,18 +46,24 @@ public class MpaDbStorage implements MpaStorage {
         return mpaList;
     }
 
-    public void addMpaToFilm(Film film) {
-        findAll().forEach(mpa -> {
-            if (Objects.equals(film.getMpa().getId(), mpa.getId())) {
-                film.setMpa(mpa);
-            }
-        });
+   public void addMpaToFilm(Film film) {
+      findAll().forEach(mpa -> {
+        if (Objects.equals(film.getMpa().getId(), mpa.getId())) {
+          film.setMpa(mpa);
     }
+   });
+   }
 
     private Mpa mapRowToMpa(ResultSet resultSet, int rowNum) throws SQLException {
         return Mpa.builder()
                 .id(resultSet.getInt("rating_mpa_id"))
                 .name(resultSet.getString("name"))
                 .build();
+    }
+    private Map<String, Object> toMap(Mpa mpa) {
+        Map<String, Object> values = new HashMap<>();
+        values.put("name",mpa.getName());
+        values.put("rating_mpa_id", mpa.getId());
+        return values;
     }
 }

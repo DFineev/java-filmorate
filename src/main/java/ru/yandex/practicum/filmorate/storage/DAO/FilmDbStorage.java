@@ -17,6 +17,7 @@ import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 
 public class FilmDbStorage implements FilmStorage {
     private final JdbcTemplate jdbcTemplate;
+    private Mpa mpa;
     @Override
     public Film addFilm(Film film) {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
@@ -106,7 +108,16 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public Film getFilmById(int id) {
-        return null;
+        final String getFilmSqlQuery =
+                "SELECT films.* " +
+                        "FROM films " +
+                        "WHERE films.film_id = ?";
+        try {
+            return jdbcTemplate.queryForObject(getFilmSqlQuery, this::makeFilm, id);
+        } catch (RuntimeException e) {
+            throw new ObjectNotFoundException("Фильм не найден.");
+        }
+
     }
     @Override
     public Film setLike(Integer filmId, Integer userId){
@@ -292,7 +303,42 @@ public class FilmDbStorage implements FilmStorage {
                 .name(resultSet.getString("name"))
                 .birthday(resultSet.getDate("birthday").toLocalDate())
                 .build();
-        user.setFriends(getFriendsByUserId(user.getId()).stream().map(User::getId).collect(Collectors.toSet()));
+        user.setFriends((List<Integer>) getFriendsByUserId(user.getId()).stream().map(User::getId).collect(Collectors.toSet()));
         return user;
+    }
+    private Film makeFilm(ResultSet rs, int rowNum) throws SQLException {
+        Integer id = rs.getInt("film_id");
+        String name = rs.getString("name");
+        String description = rs.getString("description");
+        Integer duration = rs.getInt("duration");
+        LocalDate releaseDate = rs.getDate("release_date").toLocalDate();
+        Mpa mpa = getMpaById(rs.getInt("rating_mpa_id"));
+        Set<Genre> genres = getGenre(id);
+        Set<Integer> likes = getLikes(id);
+
+        log.info("DAO: Метод создания объекта фильма из бд с id {}", id);
+
+        return filmBl(id, name, description, duration, releaseDate, mpa, genres, likes);
+    }
+    private static Film filmBl(
+            Integer id,
+            String name,
+            String description,
+            Integer duration,
+            LocalDate releaseDate,
+            Mpa mpa,
+            Set genres,
+            Set likes
+    ) {
+        return Film.builder()
+                .id(id)
+                .name(name)
+                .description(description)
+                .duration(duration)
+                .releaseDate(releaseDate)
+                .mpa(mpa)
+                .genres(genres)
+                .likes(likes)
+                .build();
     }
 }

@@ -25,5 +25,5 @@ public class User {
     private String name;
     @PastOrPresent
     private final LocalDate birthday;
-    private Set<Integer> friends;
+    private List<Integer> friends;
     }

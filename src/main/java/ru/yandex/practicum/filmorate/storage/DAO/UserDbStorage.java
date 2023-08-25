@@ -2,6 +2,8 @@ package ru.yandex.practicum.filmorate.storage.DAO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -15,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+@Primary
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -35,7 +38,7 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User updateUser(User user) {
-        getValidationUser(user);
+        //getValidationUser(user);
         String sqlQuery = "UPDATE users " +
                 "SET email=?, login=?, name=?, birthday=? " +
                 "WHERE user_id=?";

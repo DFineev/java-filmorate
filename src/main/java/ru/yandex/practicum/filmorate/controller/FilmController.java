@@ -14,7 +14,7 @@ import java.util.List;
 
 @Component
 @RestController
-@RequestMapping("/films")
+@RequestMapping(value = "/films", produces = "application/json")
 @Slf4j
 @Validated
 public class FilmController {
