@@ -109,9 +109,9 @@ public class FilmDbStorage implements FilmStorage {
     @Override
     public Film getFilmById(int id) {
         final String getFilmSqlQuery =
-                "SELECT films.* " +
+                "SELECT * " +
                         "FROM films " +
-                        "WHERE films.film_id = ?";
+                        "WHERE film_id = ?";
         try {
             return jdbcTemplate.queryForObject(getFilmSqlQuery, this::makeFilm, id);
         } catch (RuntimeException e) {
@@ -262,7 +262,7 @@ public class FilmDbStorage implements FilmStorage {
             throw new ObjectNotFoundException("Пользователь не найден.");
         }
     }
-    public List<User> getFriendsByUserId(Integer id) {
+    public HashSet<User> getFriendsByUserId(Integer id) {
         String sqlQuery =
                 "SELECT user_id, email, login, name, birthday " +
                         "FROM users " +
@@ -271,7 +271,7 @@ public class FilmDbStorage implements FilmStorage {
                         "FROM friends " +
                         "WHERE user_id=?)";
 
-        return new ArrayList<>(jdbcTemplate.query(sqlQuery, this::mapRowToUser, id));
+        return new HashSet<>(jdbcTemplate.query(sqlQuery, this::mapRowToUser, id));
     }
 
     private Map<String, Object> toMap(Film film) {
@@ -303,7 +303,7 @@ public class FilmDbStorage implements FilmStorage {
                 .name(resultSet.getString("name"))
                 .birthday(resultSet.getDate("birthday").toLocalDate())
                 .build();
-        user.setFriends((List<Integer>) getFriendsByUserId(user.getId()).stream().map(User::getId).collect(Collectors.toSet()));
+        user.setFriends(getFriendsByUserId(user.getId()).stream().map(User::getId).collect(Collectors.toSet()));
         return user;
     }
     private Film makeFilm(ResultSet rs, int rowNum) throws SQLException {

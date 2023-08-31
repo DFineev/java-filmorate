@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.filmorate.exception.ObjectNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.storage.MpaStorage;
@@ -25,8 +26,11 @@ public class MpaDbStorage implements MpaStorage {
                 "SELECT rating_mpa_id, name " +
                         "FROM mpa_type " +
                         "WHERE rating_mpa_id=?";
-
-        return jdbcTemplate.queryForObject(sqlQuery, this::mapRowToMpa, mpaId);
+        try {
+            return jdbcTemplate.queryForObject(sqlQuery, this::mapRowToMpa, mpaId);
+        } catch (RuntimeException e) {
+            throw new ObjectNotFoundException("Рейтинг mpa не найден.");
+        }
     }
 
 
@@ -59,6 +63,7 @@ public class MpaDbStorage implements MpaStorage {
                 .id(resultSet.getInt("rating_mpa_id"))
                 .name(resultSet.getString("name"))
                 .build();
+
     }
     private Map<String, Object> toMap(Mpa mpa) {
         Map<String, Object> values = new HashMap<>();
