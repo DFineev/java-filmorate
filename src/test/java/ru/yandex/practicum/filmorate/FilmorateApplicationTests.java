@@ -28,12 +28,12 @@ public class FilmorateApplicationTests {
 
     @Test
     public void shouldFindUserById() {
-       Optional<User> userOptional = Optional.ofNullable(userStorage.getUserById(1));
+        Optional<User> userOptional = Optional.ofNullable(userStorage.getUserById(1));
 
         assertThat(userOptional)
-              .isPresent()
-           .hasValueSatisfying(user ->
-                 assertThat(user).hasFieldOrPropertyWithValue("id", 1)
-           );
+                .isPresent()
+                .hasValueSatisfying(user ->
+                        assertThat(user).hasFieldOrPropertyWithValue("id", 1)
+                );
     }
 }
