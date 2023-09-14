@@ -50,7 +50,7 @@ public class FilmService {
         }
         likes.add(userId);
         film.setLikes(likes);*/
-        filmStorage.setLike(id,userId);
+        filmStorage.setLike(id, userId);
     }
 
     public void removeLike(Integer id, Integer userId) {

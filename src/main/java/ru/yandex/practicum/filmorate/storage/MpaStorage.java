@@ -9,6 +9,7 @@ public interface MpaStorage {
     Mpa getMpaById(int mpaId);
 
     List<Mpa> findAll();
+
     void addMpaToFilm(Film film);
 
 }

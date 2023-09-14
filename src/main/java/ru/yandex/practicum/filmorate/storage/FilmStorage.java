@@ -15,7 +15,9 @@ public interface FilmStorage {
     List<Film> getFilms();
 
     Film getFilmById(int id);
+
     Film setLike(Integer filmId, Integer userId);
+
     Film deleteLike(Integer filmId, Integer userId);
 
 }

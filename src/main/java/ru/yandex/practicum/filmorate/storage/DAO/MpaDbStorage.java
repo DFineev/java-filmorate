@@ -49,13 +49,13 @@ public class MpaDbStorage implements MpaStorage {
         return mpaList;
     }
 
-   public void addMpaToFilm(Film film) {
-      findAll().forEach(mpa -> {
-        if (Objects.equals(film.getMpa().getId(), mpa.getId())) {
-          film.setMpa(mpa);
+    public void addMpaToFilm(Film film) {
+        findAll().forEach(mpa -> {
+            if (Objects.equals(film.getMpa().getId(), mpa.getId())) {
+                film.setMpa(mpa);
+            }
+        });
     }
-   });
-   }
 
     private Mpa mapRowToMpa(ResultSet resultSet, int rowNum) throws SQLException {
         return Mpa.builder()
@@ -64,9 +64,10 @@ public class MpaDbStorage implements MpaStorage {
                 .build();
 
     }
+
     private Map<String, Object> toMap(Mpa mpa) {
         Map<String, Object> values = new HashMap<>();
-        values.put("name",mpa.getName());
+        values.put("name", mpa.getName());
         values.put("rating_mpa_id", mpa.getId());
         return values;
     }

@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class FilmDbStorage implements FilmStorage {
     private final JdbcTemplate jdbcTemplate;
     private Mpa mpa;
+
     @Override
     public Film addFilm(Film film) {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
@@ -118,8 +119,9 @@ public class FilmDbStorage implements FilmStorage {
         }
 
     }
+
     @Override
-    public Film setLike(Integer filmId, Integer userId){
+    public Film setLike(Integer filmId, Integer userId) {
         Film film = getFilmById(filmId);
         String sqlQuery =
                 "INSERT " +
@@ -129,6 +131,7 @@ public class FilmDbStorage implements FilmStorage {
         jdbcTemplate.update(sqlQuery, filmId, userId);
         return film;
     }
+
     public Set<Integer> getLikes(int id) {
         Set<Integer> likes = new HashSet<>();
         SqlRowSet likeRows = jdbcTemplate.queryForRowSet(
@@ -142,8 +145,9 @@ public class FilmDbStorage implements FilmStorage {
         }
         return likes;
     }
+
     @Override
-    public Film deleteLike(Integer filmId, Integer userId){
+    public Film deleteLike(Integer filmId, Integer userId) {
         if (getUserById(userId) == null) {
             throw new ObjectNotFoundException("Пользователь не найден.");
         }
@@ -156,7 +160,8 @@ public class FilmDbStorage implements FilmStorage {
         jdbcTemplate.update(sqlQuery, filmId, userId);
         return film;
     }
-     public void addMpa(Film film) {
+
+    public void addMpa(Film film) {
         findAllMpa().forEach(mpa -> {
             if (Objects.equals(film.getMpa().getId(), mpa.getId())) {
                 film.setMpa(mpa);
@@ -180,6 +185,7 @@ public class FilmDbStorage implements FilmStorage {
         }
         return mpaList;
     }
+
     public Mpa getMpaById(int mpaId) {
         String sqlQuery =
                 "SELECT rating_mpa_id, name " +
@@ -192,12 +198,14 @@ public class FilmDbStorage implements FilmStorage {
             throw new ObjectNotFoundException("Рейтинг mpa не найден.");
         }
     }
+
     public void addGenreName(Film film) {
         if (Objects.isNull(film.getGenres())) {
             return;
         }
         film.getGenres().forEach(g -> g.setName(getGenreForId(g.getId()).getName()));
     }
+
     public Set<Genre> getGenre(int id) {
         Set<Genre> genreSet = new HashSet<>();
 
@@ -223,6 +231,7 @@ public class FilmDbStorage implements FilmStorage {
         jdbcTemplate.update(sqlQuery, film.getId());
         addGenresForCurrentFilm(film);
     }
+
     public Genre getGenreForId(int id) {
         String sqlQuery =
                 "SELECT genre_id, name " +
@@ -235,6 +244,7 @@ public class FilmDbStorage implements FilmStorage {
             throw new ObjectNotFoundException("Жанр не найден.");
         }
     }
+
     public void addGenresForCurrentFilm(Film film) {
         if (Objects.isNull(film.getGenres())) {
             return;
@@ -249,6 +259,7 @@ public class FilmDbStorage implements FilmStorage {
             jdbcTemplate.update(sqlQuery, film.getId(), g.getId());
         });
     }
+
     public User getUserById(Integer id) {
         String sqlQuery =
                 "SELECT user_id, email, login, name, birthday " +
@@ -261,6 +272,7 @@ public class FilmDbStorage implements FilmStorage {
             throw new ObjectNotFoundException("Пользователь не найден.");
         }
     }
+
     public HashSet<User> getFriendsByUserId(Integer id) {
         String sqlQuery =
                 "SELECT user_id, email, login, name, birthday " +
@@ -282,18 +294,21 @@ public class FilmDbStorage implements FilmStorage {
         values.put("rating_mpa_id", film.getMpa().getId());
         return values;
     }
+
     private Mpa mapRowToMpa(ResultSet resultSet, int rowNum) throws SQLException {
         return Mpa.builder()
                 .id(resultSet.getInt("rating_mpa_id"))
                 .name(resultSet.getString("name"))
                 .build();
     }
+
     private Genre mapRowToGenre(ResultSet resultSet, int rowNum) throws SQLException {
         return Genre.builder()
                 .id(resultSet.getInt("genre_id"))
                 .name(resultSet.getString("name"))
                 .build();
     }
+
     private User mapRowToUser(ResultSet resultSet, int rowNum) throws SQLException {
         User user = User.builder()
                 .id(resultSet.getInt("user_id"))
@@ -305,6 +320,7 @@ public class FilmDbStorage implements FilmStorage {
         user.setFriends(getFriendsByUserId(user.getId()).stream().map(User::getId).collect(Collectors.toSet()));
         return user;
     }
+
     private Film makeFilm(ResultSet rs, int rowNum) throws SQLException {
         Integer id = rs.getInt("film_id");
         String name = rs.getString("name");
@@ -319,6 +335,7 @@ public class FilmDbStorage implements FilmStorage {
 
         return filmBl(id, name, description, duration, releaseDate, mpa, genres, likes);
     }
+
     private static Film filmBl(
             Integer id,
             String name,

@@ -71,7 +71,7 @@ public class UserService {
         List<Integer> friends2 = user2.getFriends();
         friends2.remove(user1.getId());
         user2.setFriends(friends2);*/
-        userStorage.deleteFriend(id,friendId);
+        userStorage.deleteFriend(id, friendId);
     }
 
     public List<User> getFriendsList(Integer id) {
@@ -88,7 +88,7 @@ public class UserService {
             friendsList.sort(usersComparator);
         }*/
 //        return friendsList;
-  return userStorage.getFriendsByUserId(id);
+        return userStorage.getFriendsByUserId(id);
 
     }
 
