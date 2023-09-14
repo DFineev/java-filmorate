@@ -25,6 +25,7 @@ public class FilmorateApplicationTests {
         this.jdbcTemplate = jdbcTemplate;
         userStorage = new UserDbStorage(jdbcTemplate);
     }
+
     @Test
     public void shouldFindUserById() {
        Optional<User> userOptional = Optional.ofNullable(userStorage.getUserById(1));
@@ -35,9 +36,4 @@ public class FilmorateApplicationTests {
                  assertThat(user).hasFieldOrPropertyWithValue("id", 1)
            );
     }
-
-    @Test
-    public void shouldCreateUser(){
-    }
-
 }
