@@ -9,7 +9,6 @@ import ru.yandex.practicum.filmorate.service.FilmService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import java.util.HashSet;
 import java.util.List;
 
 @Component
