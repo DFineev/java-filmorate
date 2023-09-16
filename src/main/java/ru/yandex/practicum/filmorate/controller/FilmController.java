@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping(value = "/films", produces = "application/json")
 @Slf4j
 @Validated
-public class FilmController {
+public class filmController {
 
    private final FilmService filmService;
 
