@@ -12,7 +12,7 @@ import java.util.*;
 @Component
 @Service
 @Slf4j
-public class userService {
+public class UserService {
 
     private final UserStorage userStorage;
 
