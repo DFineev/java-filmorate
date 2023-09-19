@@ -28,7 +28,7 @@ public class UserDbStorage implements UserStorage {
     public User createUser(User user) {
         getValidationUser(user);
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
-                .withTableName("users")
+                .withTableName("USERS")
                 .usingColumns("email","login","name","birthday")
                 .usingGeneratedKeyColumns("user_id");
         user.setId(simpleJdbcInsert.executeAndReturnKey(toMap(user)).intValue());
