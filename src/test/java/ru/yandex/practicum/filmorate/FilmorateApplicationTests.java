@@ -28,8 +28,6 @@ public class FilmorateApplicationTests {
                 LocalDate.of(1946, 8, 20));
         Integer id = userStorage.createUser(user).getId();
 
-        System.out.println(user);
-
         Optional<User> userOptional = Optional.ofNullable(userStorage.getUserById(id));
 
         assertThat(userOptional)
