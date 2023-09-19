@@ -1,39 +1,41 @@
 package ru.yandex.practicum.filmorate;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.context.jdbc.Sql;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.DAO.UserDbStorage;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@DataJdbcTest
-@Sql(value = {"/schematest.sql", "/datatest.sql"})
+@SpringBootTest
+@AutoConfigureTestDatabase
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 
 public class FilmorateApplicationTests {
 
-    private final JdbcTemplate jdbcTemplate;
     private final UserDbStorage userStorage;
-
-    @Autowired
-    public FilmorateApplicationTests(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-        userStorage = new UserDbStorage(jdbcTemplate);
-    }
 
     @Test
     public void shouldFindUserById() {
-        Optional<User> userOptional = Optional.ofNullable(userStorage.getUserById(1));
+
+        User user = new User("mail@mail.ru", "dolore", "Nick Name",
+                LocalDate.of(1946, 8, 20));
+        Integer id = userStorage.createUser(user).getId();
+
+        System.out.println(user);
+
+        Optional<User> userOptional = Optional.ofNullable(userStorage.getUserById(id));
 
         assertThat(userOptional)
-                .isPresent()
-                .hasValueSatisfying(user ->
-                        assertThat(user).hasFieldOrPropertyWithValue("id", 1)
-                );
+              .isPresent()
+            .hasValueSatisfying(u ->
+                  assertThat(u).hasFieldOrPropertyWithValue("id", id)
+         );
     }
 }

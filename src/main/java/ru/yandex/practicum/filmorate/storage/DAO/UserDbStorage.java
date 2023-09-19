@@ -29,6 +29,7 @@ public class UserDbStorage implements UserStorage {
         getValidationUser(user);
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("users")
+                .usingColumns("email","login","name","birthday")
                 .usingGeneratedKeyColumns("user_id");
         user.setId(simpleJdbcInsert.executeAndReturnKey(toMap(user)).intValue());
         log.info("Поступил запрос на добавление пользователя. Пользователь добавлен.");
