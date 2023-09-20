@@ -1,6 +1,3 @@
-DROP TABLE IF EXISTS mpa_type,
-					 genre_type CASCADE;
-
 DROP ALL OBJECTS;
 
 CREATE TABLE IF NOT EXISTS mpa_type(
