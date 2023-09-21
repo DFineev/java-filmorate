@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS mpa_type,
-					 genre_type CASCADE;
+--DROP TABLE IF EXISTS mpa_type,
+--					 genre_type CASCADE;
 
 DROP ALL OBJECTS;
 
