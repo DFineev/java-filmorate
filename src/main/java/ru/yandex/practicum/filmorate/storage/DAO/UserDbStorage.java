@@ -38,7 +38,6 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User updateUser(User user) {
-        //getValidationUser(user);
         String sqlQuery = "UPDATE users " +
                 "SET email=?, login=?, name=?, birthday=? " +
                 "WHERE user_id=?";
