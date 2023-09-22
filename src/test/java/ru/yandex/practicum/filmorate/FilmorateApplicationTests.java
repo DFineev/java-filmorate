@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.storage.DAO.UserDbStorage;
 
 @SpringBootTest
-@AutoConfigureTestDatabase
+//@AutoConfigureTestDatabase
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 
 public class FilmorateApplicationTests {
