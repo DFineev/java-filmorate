@@ -10,6 +10,8 @@ import java.util.Set;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Film {
     private int id;
     @NotBlank(message = "Название фильма не должно быть пустым")
@@ -25,4 +27,11 @@ public class Film {
     private Mpa mpa;
     private Set<Genre> genres;
 
+    public Film(String name, String description, LocalDate releaseDate, int duration, Mpa mpa) {
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+        this.mpa = mpa;
+    }
 }

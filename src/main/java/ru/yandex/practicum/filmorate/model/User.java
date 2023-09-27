@@ -27,7 +27,6 @@ public class User {
     private Set<Integer> friends;
 
     public User(String email, String login, String name, LocalDate birthday) {
-        this.id = id;
         this.email = email;
         this.login = login;
         this.name = name;
