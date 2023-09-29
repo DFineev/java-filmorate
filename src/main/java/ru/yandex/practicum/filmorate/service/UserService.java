@@ -43,51 +43,13 @@ public class UserService {
 
     public void makeFriends(int id, int friendId) {
         userStorage.addFriend(id, friendId);
-     /*   User user1 = userStorage.getUserById(id);
-        User user2 = userStorage.getUserById(friendId);
-        List<Integer> friends1 = user1.getFriends();
-
-        if (friends1 == null) {
-            friends1 = new ArrayList<>();
-        }
-        friends1.add(user2.getId());
-        user1.setFriends(friends1);
-
-        List<Integer> friends2 = user2.getFriends();
-        if (friends2 == null) {
-            friends2 = new ArrayList<>();
-        }
-        friends2.add(user1.getId());
-        user2.setFriends(friends2);*/
-
     }
 
     public void deleteFromFriends(int id, int friendId) {
-      /*  User user1 = userStorage.getUserById(id);
-        User user2 = userStorage.getUserById(friendId);
-        List<Integer> friends1 = user1.getFriends();
-        friends1.remove(user2.getId());
-        user1.setFriends(friends1);
-        List<Integer> friends2 = user2.getFriends();
-        friends2.remove(user1.getId());
-        user2.setFriends(friends2);*/
         userStorage.deleteFriend(id, friendId);
     }
 
     public List<User> getFriendsList(Integer id) {
-      /*  User user = userStorage.getUserById(id);
-        List<User> friendsList = new ArrayList<>();
-        UsersComparator usersComparator = new UsersComparator();
-        Set<Integer> friendIds = user.getFriends();
-        if (friendIds == null) {
-            return friendsList;
-        } else {
-            for (Integer friendId : friendIds) {
-                friendsList.add(userStorage.getUserById(friendId));
-            }
-            friendsList.sort(usersComparator);
-        }*/
-//        return friendsList;
         return userStorage.getFriendsByUserId(id);
 
     }
