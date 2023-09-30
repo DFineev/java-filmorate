@@ -67,6 +67,7 @@ public class FilmDbStorage implements FilmStorage {
         if (rowsCount > 0) {
             return getFilmById(film.getId());
         } else {
+            log.warn("Фильм с указанным id не найден");
             throw new ObjectNotFoundException("Фильм не найден.");
         }
     }
@@ -116,6 +117,7 @@ public class FilmDbStorage implements FilmStorage {
         try {
             return jdbcTemplate.queryForObject(getFilmSqlQuery, this::makeFilm, id);
         } catch (RuntimeException e) {
+            log.warn("Фильм с указанным id не найден");
             throw new ObjectNotFoundException("Фильм не найден.");
         }
 
@@ -196,6 +198,7 @@ public class FilmDbStorage implements FilmStorage {
         try {
             return jdbcTemplate.queryForObject(sqlQuery, this::mapRowToMpa, mpaId);
         } catch (RuntimeException e) {
+            log.warn("Запрашиваемый рейтинг MPA не найден");
             throw new ObjectNotFoundException("Рейтинг mpa не найден.");
         }
     }
@@ -242,6 +245,7 @@ public class FilmDbStorage implements FilmStorage {
         try {
             return jdbcTemplate.queryForObject(sqlQuery, this::mapRowToGenre, id);
         } catch (RuntimeException e) {
+            log.info("Запрашиваемый жанр не найден");
             throw new ObjectNotFoundException("Жанр не найден.");
         }
     }
@@ -270,6 +274,7 @@ public class FilmDbStorage implements FilmStorage {
         try {
             return jdbcTemplate.queryForObject(sqlQuery, this::mapRowToUser, id);
         } catch (RuntimeException e) {
+            log.warn("Пользователь с указанным id не найден");
             throw new ObjectNotFoundException("Пользователь не найден.");
         }
     }
