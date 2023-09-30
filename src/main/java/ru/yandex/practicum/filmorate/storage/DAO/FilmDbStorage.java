@@ -33,7 +33,7 @@ public class FilmDbStorage implements FilmStorage {
     public Film addFilm(Film film) {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("films")
-                .usingColumns("name","description","release_date","duration","rating_mpa_id")
+                .usingColumns("name", "description", "release_date", "duration", "rating_mpa_id")
                 .usingGeneratedKeyColumns("film_id");
         film.setId(simpleJdbcInsert.executeAndReturnKey(toMap(film)).intValue());
         addMpa(film);
