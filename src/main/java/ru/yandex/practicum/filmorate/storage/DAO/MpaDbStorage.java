@@ -28,6 +28,7 @@ public class MpaDbStorage implements MpaStorage {
         try {
             return jdbcTemplate.queryForObject(sqlQuery, this::mapRowToMpa, mpaId);
         } catch (RuntimeException e) {
+            log.warn("Не найден рейтинг MPA с запрошенным id");
             throw new ObjectNotFoundException("Рейтинг mpa не найден.");
         }
     }

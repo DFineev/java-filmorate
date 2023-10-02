@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.storage.DAO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class GenreDbStorage implements GenreStorage {
@@ -29,6 +31,7 @@ public class GenreDbStorage implements GenreStorage {
         try {
             return jdbcTemplate.queryForObject(sqlQuery, this::mapRowToGenre, id);
         } catch (RuntimeException e) {
+            log.warn("Не найден жанр с запрошенным id");
             throw new ObjectNotFoundException("Жанр не найден.");
         }
     }

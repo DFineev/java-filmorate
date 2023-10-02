@@ -29,7 +29,7 @@ public class UserDbStorage implements UserStorage {
         getValidationUser(user);
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("users")
-                .usingColumns("email","login","name","birthday")
+                .usingColumns("email", "login", "name", "birthday")
                 .usingGeneratedKeyColumns("user_id");
         user.setId(simpleJdbcInsert.executeAndReturnKey(toMap(user)).intValue());
         log.info("Поступил запрос на добавление пользователя. Пользователь добавлен.");
@@ -72,6 +72,7 @@ public class UserDbStorage implements UserStorage {
         try {
             return jdbcTemplate.queryForObject(sqlQuery, this::getMapRowToUser, id);
         } catch (RuntimeException e) {
+            log.warn("Не найден пользователь с указанным id");
             throw new ObjectNotFoundException("Пользователь не найден.");
         }
     }
@@ -98,6 +99,7 @@ public class UserDbStorage implements UserStorage {
         try {
             getUserById(friendId);
         } catch (RuntimeException e) {
+            log.warn("Не найден пользователь с указанным id для добавления в друзья");
             throw new ObjectNotFoundException("Пользователь не найден.");
         }
         String sqlQuery =
