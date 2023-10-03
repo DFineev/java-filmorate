@@ -8,11 +8,10 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Set;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Film {
     private int id;
     @NotNull
@@ -23,7 +22,17 @@ public class Film {
    @FilmReleaseDate
     private LocalDate releaseDate;
     @Positive
-    private long duration;
+    private int duration;
     private Set<Integer> likes;
+    @NotNull
+    private Mpa mpa;
+    private Set<Genre> genres;
 
+    public Film(String name, String description, LocalDate releaseDate, int duration, Mpa mpa) {
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+        this.mpa = mpa;
+    }
 }

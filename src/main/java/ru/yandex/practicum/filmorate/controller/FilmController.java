@@ -9,12 +9,11 @@ import ru.yandex.practicum.filmorate.service.FilmService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import java.util.HashSet;
 import java.util.List;
 
 @Component
 @RestController
-@RequestMapping("/films")
+@RequestMapping(value = "/films", produces = "application/json")
 @Slf4j
 @Validated
 public class FilmController {
@@ -33,7 +32,7 @@ public class FilmController {
     }
 
     @GetMapping
-    public HashSet<Film> getFilms() {
+    public List<Film> getFilms() {
         log.info("Получен запрос списка фильмов");
         return filmService.getFilms();
     }

@@ -12,19 +12,24 @@ import java.util.*;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private int id;
     @NotNull
-    @NotBlank
     @Email
-
-    private final String email;
+    private String email;
     @NotNull
     @NotBlank
-    private final String login;
+    private String login;
     private String name;
     @PastOrPresent
-    private final LocalDate birthday;
-
+    private LocalDate birthday;
     private Set<Integer> friends;
+
+    public User(String email, String login, String name, LocalDate birthday) {
+        this.email = email;
+        this.login = login;
+        this.name = name;
+        this.birthday = birthday;
+    }
 }

@@ -1,7 +1,5 @@
 package ru.yandex.practicum.filmorate.controller;
 
-//import jakarta.validation.Valid;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
@@ -71,7 +69,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/friends")
-    public List<User> getFriendsList(@PathVariable @Min(1) int id) {
+    public List<User> getFriendsList(@PathVariable int id) {
         log.info("Получен запрос на вывод списка друзей");
         return userService.getFriendsList(id);
     }
